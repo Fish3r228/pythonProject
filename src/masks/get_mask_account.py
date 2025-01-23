@@ -9,6 +9,7 @@ def get_mask_account(acc_num):
     masked_card_number = f"**{account_str[-4:]}"
     return masked_card_number
 
+
 #  пример использования
 acc_num = 123123123
 masked_card_number = get_mask_account(acc_num)

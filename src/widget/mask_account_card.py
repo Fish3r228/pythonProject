@@ -1,15 +1,17 @@
 def mask_card_number(card_number):
     # Пример маскировки номера карты: оставляем первые 6 и последние 4 цифры
-    return card_number[:6] + '*' * (len(card_number) - 10) + card_number[-4:]
+    return card_number[:6] + "*" * (len(card_number) - 10) + card_number[-4:]
+
 
 def mask_account_number(account_number):
     # Пример маскировки номера счета: оставляем последние 4 цифры
-    return '**' + account_number[-4:]
+    return "**" + account_number[-4:]
+
 
 def mask_card_or_account(input_string):
     # Разделяем строку на тип и номер
     parts = input_string.split()
-    type_ = ' '.join(parts[:-1])  # Тип может состоять из нескольких слов (например, "Visa Platinum")
+    type_ = " ".join(parts[:-1])  # Тип может состоять из нескольких слов (например, "Visa Platinum")
     number = parts[-1]  # Последний элемент — это номер карты или счета
 
     # Определяем тип и применяем соответствующую маскировку
@@ -21,10 +23,11 @@ def mask_card_or_account(input_string):
     # Возвращаем строку с замаскированным номером
     return f"{type_} {masked_number}"
 
+
 # Примеры использования
 print(mask_card_or_account("Visa Platinum 7000792289606361"))  # Visa Platinum 700079******6361
-print(mask_card_or_account("Maestro 7000792289606361"))        # Maestro 700079******6361
-print(mask_card_or_account("Счет 73654108430135874305"))       # Счет **4305
+print(mask_card_or_account("Maestro 7000792289606361"))  # Maestro 700079******6361
+print(mask_card_or_account("Счет 73654108430135874305"))  # Счет **4305
 
 from datetime import datetime
 
