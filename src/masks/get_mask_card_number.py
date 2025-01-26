@@ -1,4 +1,4 @@
-def get_mask_card_number(card_number):
+def get_mask_card_number(card_number: int) -> str:
     """Функция которая преобразует номер карты в строку"""
     card_str = str(card_number)
     # проверяем что длина номера карты корректна

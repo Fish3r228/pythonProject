@@ -1,4 +1,4 @@
-def get_mask_account(acc_num):
+def get_mask_account(acc_num: int) -> str:
     """Функция которая преобразует номер счета в строку"""
     account_str = str(acc_num)
     # Проверка что длина номера счета достаточна для маскировки

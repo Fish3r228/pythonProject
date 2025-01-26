@@ -1,14 +1,14 @@
-def mask_card_number(card_number):
+def mask_card_number(card_number: str) -> str:
     # Пример маскировки номера карты: оставляем первые 6 и последние 4 цифры
     return card_number[:6] + "*" * (len(card_number) - 10) + card_number[-4:]
 
 
-def mask_account_number(account_number):
+def mask_account_number(account_number: str) -> str:
     # Пример маскировки номера счета: оставляем последние 4 цифры
     return "**" + account_number[-4:]
 
 
-def mask_card_or_account(input_string):
+def mask_card_or_account(input_string: str) -> str:
     # Разделяем строку на тип и номер
     parts = input_string.split()
     type_ = " ".join(parts[:-1])  # Тип может состоять из нескольких слов (например, "Visa Platinum")
@@ -29,10 +29,8 @@ print(mask_card_or_account("Visa Platinum 7000792289606361"))  # Visa Platinum 7
 print(mask_card_or_account("Maestro 7000792289606361"))  # Maestro 700079******6361
 print(mask_card_or_account("Счет 73654108430135874305"))  # Счет **4305
 
-from datetime import datetime
 
-
-def get_date(date_string):
+def get_date(date_string: str) -> str:
     # Извлекаем год, месяц и день с помощью срезов
     year = date_string[0:4]
     month = date_string[5:7]
