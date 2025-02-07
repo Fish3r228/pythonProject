@@ -7,6 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.13"
+pytest = "^8.3.4"
 
 
 [tool.poetry.group.lint.dependencies]
@@ -34,3 +35,6 @@ line_length = 119
 disallow_untyped_defs = true
 warn_return_any = true
 exclude = "venv"
+
+[tool.pytest.ini_options]
+addopts = "--cov=processing --cov-report=html"
