@@ -52,29 +52,31 @@ def test_filter_by_state_empty_input():
         _result = filter_by_state(TEST_DATA, state)
         assert _result == next_result
 
+
 from src.processing import sort_by_date
 
 TEST_DATA_1 = [
-    {'name': 'Event 1', 'date': '2023-10-01'},
-    {'name': 'Event 2', 'date': '2023-09-15'},
-    {'name': 'Event 3', 'date': '2023-12-25'},
-    {'name': 'Event 4', 'date': '2023-01-01'},
+    {"name": "Event 1", "date": "2023-10-01"},
+    {"name": "Event 2", "date": "2023-09-15"},
+    {"name": "Event 3", "date": "2023-12-25"},
+    {"name": "Event 4", "date": "2023-01-01"},
 ]
 
 # Результаты
 EXPECTED_ASCENDING_1 = [
-    {'name': 'Event 4', 'date': '2023-01-01'},
-    {'name': 'Event 2', 'date': '2023-09-15'},
-    {'name': 'Event 1', 'date': '2023-10-01'},
-    {'name': 'Event 3', 'date': '2023-12-25'},
+    {"name": "Event 4", "date": "2023-01-01"},
+    {"name": "Event 2", "date": "2023-09-15"},
+    {"name": "Event 1", "date": "2023-10-01"},
+    {"name": "Event 3", "date": "2023-12-25"},
 ]
 
 EXPECTED_DESCENDING_1 = [
-    {'name': 'Event 3', 'date': '2023-12-25'},
-    {'name': 'Event 1', 'date': '2023-10-01'},
-    {'name': 'Event 2', 'date': '2023-09-15'},
-    {'name': 'Event 4', 'date': '2023-01-01'},
+    {"name": "Event 3", "date": "2023-12-25"},
+    {"name": "Event 1", "date": "2023-10-01"},
+    {"name": "Event 2", "date": "2023-09-15"},
+    {"name": "Event 4", "date": "2023-01-01"},
 ]
+
 
 # Тесты
 def test_sort_by_date_ascending_1() -> None:
@@ -84,6 +86,7 @@ def test_sort_by_date_ascending_1() -> None:
     result = sort_by_date(TEST_DATA_1, reverse=False)
     assert result == EXPECTED_ASCENDING_1
 
+
 def test_sort_by_date_descending_2() -> None:
     """
     Тестирование сортировки по дате в порядке убывания.
@@ -91,10 +94,12 @@ def test_sort_by_date_descending_2() -> None:
     result = sort_by_date(TEST_DATA_1, reverse=True)
     assert result == EXPECTED_DESCENDING_1
 
+
 # Тест для корректных данных
 def test_sort_by_date_ascending_3() -> None:
     result = sort_by_date(TEST_DATA_1, reverse=False)
     assert result == EXPECTED_ASCENDING_1
+
 
 # Тест для некорректных данных
 def test_sort_by_date_invalid_format() -> None:
@@ -102,8 +107,8 @@ def test_sort_by_date_invalid_format() -> None:
     Тестирование обработки неверного формата даты.
     """
     data = [
-        {'name': 'Event 1', 'date': '2023-10-01'},
-        {'name': 'Event 2', 'date': '2023/09/15'},  # Неверный формат даты
+        {"name": "Event 1", "date": "2023-10-01"},
+        {"name": "Event 2", "date": "2023/09/15"},  # Неверный формат даты
     ]
     with pytest.raises(ValueError, match="Invalid date format: 2023/09/15. Expected format: YYYY-MM-DD"):
         sort_by_date(data)

@@ -6,11 +6,12 @@ def filter_by_state(data, state):
     :param state: Статус, по которому производится фильтрация.
     :return: Отфильтрованный список словарей.
     """
-    return [item for item in data if item.get('state') == state]
+    return [item for item in data if item.get("state") == state]
 
 
-from typing import List, Dict, Any, Optional
 from datetime import datetime
+from typing import Any, Dict, List, Optional
+
 
 def sort_by_date(data: List[Dict[str, Any]], reverse: bool = False) -> List[Dict[str, Any]]:
     """
@@ -19,12 +20,12 @@ def sort_by_date(data: List[Dict[str, Any]], reverse: bool = False) -> List[Dict
 
     def get_date(item: Dict[str, Any]) -> datetime:
         # Проверяем наличие ключа 'date'
-        if 'date' not in item:
+        if "date" not in item:
             raise ValueError("Key 'date' not found in dictionary")
 
         # Пытаемся преобразовать строку в дату
         try:
-            return datetime.strptime(item['date'], '%Y-%m-%d')
+            return datetime.strptime(item["date"], "%Y-%m-%d")
         except ValueError as e:
             raise ValueError(f"Invalid date format: {item['date']}. Expected format: YYYY-MM-DD") from e
 
