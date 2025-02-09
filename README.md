@@ -47,6 +47,27 @@ def test_get_mask_account_with_spaces():
 pytest: Фреймворк для написания и запуска тестов.
 pytest-cov: Плагин для измерения покрытия кода тестами.
 
+## Generators 
+Добавил примеры использования функций filter_by_currency, transaction_descriptions, card_number_generator:
+- filter_by_currency
+transactions = [
+    {"amount": 100, "currency": "USD"},
+    {"amount": 200, "currency": "EUR"},
+    {"amount": 300, "currency": "USD"},
+    {"amount": 400, "currency": "GBP"},
+    {"amount": 500, "currency": "USD"},
+]
+- transaction_descriptions
+transactions = [
+    {"amount": 100, "currency": "USD", "description": "Покупка в магазине"},
+    {"amount": 200, "currency": "EUR", "description": "Оплата ресторана"},
+    {"amount": 300, "currency": "USD", "description": "Перевод другу"},
+]
+- card_number_generator
+card_numbers = card_number_generator("0000 0000 0000 0001", "0000 0000 0000 0005")
+
+- Для проверки тестов/ переходите в файл test_generation  и пропишите в консоли команду pytest 
+
 ## Установка
 
 1. Склонируйте репозиторий на ваш компьютер:
