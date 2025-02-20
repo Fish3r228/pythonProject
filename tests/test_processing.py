@@ -1,6 +1,6 @@
 import pytest
 
-from src.processing import filter_by_state
+from src.processing import filter_by_state, sort_by_date
 
 # Пример данных для тестирования
 TEST_DATA = [
@@ -52,8 +52,6 @@ def test_filter_by_state_empty_input():
         _result = filter_by_state(TEST_DATA, state)
         assert _result == next_result
 
-
-from src.processing import sort_by_date
 
 TEST_DATA_1 = [
     {"name": "Event 1", "date": "2023-10-01"},
