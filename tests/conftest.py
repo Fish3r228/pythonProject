@@ -130,7 +130,9 @@ def test_sort_by_date_ascending_2():
         {"name": "Event 3", "date": "2023-12-25"},
     ]
 
+
 # По разделу generators.py
+
 
 @pytest.fixture
 def test_filter_by_currency():
@@ -140,15 +142,18 @@ def test_filter_by_currency():
         {"amount": 500, "currency": "USD"},
     ]
 
+
 @pytest.fixture
 def test_filter_by_currency_with_other_currency():
     return [
         {"amount": 200, "currency": "EUR"},
     ]
 
+
 @pytest.fixture
 def test_empty_transactions():
     return []
+
 
 @pytest.fixture
 def test_transaction_descriptions():
@@ -158,11 +163,18 @@ def test_transaction_descriptions():
         "Перевод другу",
     ]
 
+
 @pytest.fixture
 def test_transaction_descriptions_empty_list():
     return []
 
+
 @pytest.fixture
 def test_card_number_generator_basic():
-    return ["0000 0000 0000 1000", "0000 0000 0000 1001", "0000 0000 0000 1002", "0000 0000 0000 1003",
-                        "0000 0000 0000 1004"]
+    return [
+        "0000 0000 0000 1000",
+        "0000 0000 0000 1001",
+        "0000 0000 0000 1002",
+        "0000 0000 0000 1003",
+        "0000 0000 0000 1004",
+    ]

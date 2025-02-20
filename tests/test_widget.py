@@ -1,4 +1,6 @@
-from src.widget import mask_account_card
+import pytest
+
+from src.widget import get_date, mask_account_card
 
 
 def test_mask_account_card_card_number():
@@ -27,9 +29,6 @@ def test_mask_account_card_short_input():
     assert mask_account_card("12") == "12"
 
 
-from src.widget import get_date
-
-
 def test_get_data_valid_date():
     # Корректная дата
     date_str = "2023-10-05"
@@ -49,9 +48,6 @@ def test_get_data_single_digit_day_month():
     date_str = "2023-01-01"
     expected = "01.01.2023"
     assert get_date(date_str) == expected
-
-
-import pytest
 
 
 def test_get_date_empty_string():
