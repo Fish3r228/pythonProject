@@ -1,52 +1,38 @@
-import os
 import requests
-from typing import Dict
 
-# Загружаем переменные окружения из файла .env
-from dotenv import load_dotenv
+API_KEY = 'kxsl9Rogo3ZzpoEbZaNC4frMXI7soEcl'
+BASE_URL = f'http://api.apilayer.com/exchangerates_data/latest?access_key={API_KEY}'
 
-load_dotenv()
-
-def convert_to_rub(transaction: Dict) -> float:
+def convert_to_rub(amount, currency):
     """
-    Конвертирует сумму транзакции в рубли.
+    Конвертирует сумму в указанной валюте в рубли.
     """
-    # Проверяем, что транзакция содержит необходимые ключи
-    if not all(key in transaction for key in ['amount', 'currency']):
-        raise ValueError("Транзакция должна содержать ключи 'amount' и 'currency'.")
-
-    amount = transaction['amount']
-    currency = transaction['currency']
-
-    # Если валюта уже рубли, возвращаем сумму
     if currency == 'RUB':
         return float(amount)
 
-    # Получаем API-ключ из переменных окружения
-    api_key = os.getenv('EXCHANGE_RATES_API_KEY')
-    if not api_key:
-        raise RuntimeError("API-ключ не найден. Убедитесь, что он указан в файле .env.")
-
-    # URL для получения курсов валют
-    url = f"https://api.apilayer.com/exchangerates_data/latest?base={currency}&symbols=RUB"
-
-    # Заголовок с API-ключом
-    headers = {
-        "apikey": api_key
-    }
-
     try:
         # Выполняем запрос к API
-        response = requests.get(url, headers=headers)
+        response = requests.get(BASE_URL)
         response.raise_for_status()  # Проверяем, что запрос успешен
         data = response.json()
 
-        # Получаем курс валюты к рублю
-        rub_rate = data['rates']['RUB']
-        amount_in_rub = amount * rub_rate
+        # Логируем ответ API для отладки
+        print("Ответ API:", data)
+
+        # Получаем курс рубля и валюты транзакции
+        rub_rate = data['rates'].get('RUB')
+        currency_rate = data['rates'].get(currency)
+
+        if not rub_rate or not currency_rate:
+            raise ValueError("Курс рубля или валюты не найден в ответе API.")
+
+        # Конвертируем сумму в рубли
+        amount_in_rub = (amount / currency_rate) * rub_rate
         return float(amount_in_rub)
 
     except requests.RequestException as e:
-        raise RuntimeError(f"Ошибка при получении курса валют: {e}")
-    except KeyError:
-        raise RuntimeError("Не удалось получить курс для указанной валюты.")
+        print(f"Ошибка при запросе к API: {e}")
+        return 0.0
+    except (KeyError, ValueError) as e:
+        print(f"Ошибка при обработке данных: {e}")
+        return 0.0
