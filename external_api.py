@@ -1,38 +1,30 @@
+import os
 import requests
+from dotenv import load_dotenv
 
-API_KEY = 'kxsl9Rogo3ZzpoEbZaNC4frMXI7soEcl'
-BASE_URL = f'http://api.apilayer.com/exchangerates_data/latest?access_key={API_KEY}'
+# Загружаем переменные окружения из файла .env
+load_dotenv()
 
 def convert_to_rub(amount, currency):
     """
-    Конвертирует сумму в указанной валюте в рубли.
+    Конвертирует сумму транзакции в рубли.
     """
-    if currency == 'RUB':
+    if currency == "RUB":
         return float(amount)
 
-    try:
-        # Выполняем запрос к API
-        response = requests.get(BASE_URL)
-        response.raise_for_status()  # Проверяем, что запрос успешен
-        data = response.json()
+    # Получаем API-ключ из переменных окружения
+    api_key = os.getenv("EXCHANGE_RATES_API_KEY")
+    if not api_key:
+        raise ValueError("API key not found in environment variables.")
 
-        # Логируем ответ API для отладки
-        print("Ответ API:", data)
+    # Делаем запрос к API для получения курса валют
+    url = f"https://api.apilayer.com/exchangerates_data/latest?base={currency}"
+    headers = {"apikey": api_key}
+    response = requests.get(url, headers=headers)
 
-        # Получаем курс рубля и валюты транзакции
-        rub_rate = data['rates'].get('RUB')
-        currency_rate = data['rates'].get(currency)
+    if response.status_code != 200:
+        raise Exception(f"Failed to fetch exchange rates: {response.status_code}")
 
-        if not rub_rate or not currency_rate:
-            raise ValueError("Курс рубля или валюты не найден в ответе API.")
-
-        # Конвертируем сумму в рубли
-        amount_in_rub = (amount / currency_rate) * rub_rate
-        return float(amount_in_rub)
-
-    except requests.RequestException as e:
-        print(f"Ошибка при запросе к API: {e}")
-        return 0.0
-    except (KeyError, ValueError) as e:
-        print(f"Ошибка при обработке данных: {e}")
-        return 0.0
+    data = response.json()
+    rate = data["rates"]["RUB"]
+    return float(amount) * rate

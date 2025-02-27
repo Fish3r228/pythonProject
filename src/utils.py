@@ -1,6 +1,7 @@
 import json
 import os
 
+
 def load_transactions(file_path):
     """
     Загружает данные о транзакциях из JSON-файла.
@@ -9,7 +10,7 @@ def load_transactions(file_path):
         return []
 
     try:
-        with open(file_path, 'r', encoding='utf-8') as file:
+        with open(file_path, "r", encoding="utf-8") as file:
             data = json.load(file)
             if isinstance(data, list):
                 return data
@@ -17,9 +18,3 @@ def load_transactions(file_path):
                 return []
     except (json.JSONDecodeError, FileNotFoundError):
         return []
-
-
-
-# Пример использования
-transactions = load_transactions('path/to/transactions.json')
-print(transactions)
