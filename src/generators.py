@@ -58,10 +58,9 @@ def card_number_generator(start, end):
     for number in range(start, end + 1):
         # Форматируем номер в формат XXXX XXXX XXXX XXXX
         card_number = f"{number:016d}"  # Дополняем нулями до 16 цифр
-        formatted_card_number = " ".join(
-            [card_number[i:i+4] for i in range(0, 16, 4)]
-        )
+        formatted_card_number = " ".join([card_number[i: i + 4] for i in range(0, 16, 4)])
         yield formatted_card_number
+
 
 # Пример использования 1
 # Генерируем номера карт от .... ....0000 0001 до .... .... 0000 0005
@@ -76,6 +75,3 @@ for card in card_numbers:
 card_numbers = card_number_generator("0000 0000 0000 1000", "0000 0000 0000 1005")
 for card in card_numbers:
     print(card)
-
-
-

@@ -1,3 +1,7 @@
+from datetime import datetime
+from typing import Any, Dict, List
+
+
 def filter_by_state(data, state):
     """
     Фильтрует список словарей по заданному статусу.
@@ -7,10 +11,6 @@ def filter_by_state(data, state):
     :return: Отфильтрованный список словарей.
     """
     return [item for item in data if item.get("state") == state]
-
-
-from datetime import datetime
-from typing import Any, Dict, List, Optional
 
 
 def sort_by_date(data: List[Dict[str, Any]], reverse: bool = False) -> List[Dict[str, Any]]:
