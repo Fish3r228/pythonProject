@@ -1,10 +1,11 @@
 import json
 import logging
 import os
+from src.logger import setup_logger # импортируем твою удобную функцию создания логгера
 
-# Настройка логгера
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+
+# создание логгера
+logger = setup_logger('utils', 'utils.log', logging.DEBUG)
 
 
 def load_transactions(file_path: str) -> list:
