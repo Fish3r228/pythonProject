@@ -1,8 +1,8 @@
 import logging
+from src.logger import setup_logger
 
 # Настройка логгера
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+logger = setup_logger('masks', 'masks.log', logging.DEBUG )
 
 
 def get_mask_account(acc_num: int) -> str:
