@@ -1,8 +1,6 @@
 def mask_account_card(data: str) -> str:
     """
     Маскирует номер счета или карты.
-    data: Номер счета или карты.
-    return: Замаскированный номер.
     """
     # Оставляем только цифры
     digits = "".join([char for char in data if char.isdigit()])
