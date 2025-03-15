@@ -1,4 +1,5 @@
 import logging
+
 from src.logger import setup_logger
 
 # Настройка логгера

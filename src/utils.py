@@ -1,8 +1,8 @@
 import json
 import logging
 import os
-from src.logger import setup_logger # импортируем твою удобную функцию создания логгера
 
+from src.logger import setup_logger  # импортируем твою удобную функцию создания логгера
 
 # создание логгера
 logger = setup_logger('utils', 'utils.log', logging.DEBUG)
