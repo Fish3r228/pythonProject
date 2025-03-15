@@ -1,54 +1,82 @@
 import unittest
+from src.filter_operations_by_description import filter_operations_by_description  # Импортируем функцию
 
-from src.count_operations_by_category import count_operations_by_category
+class TestFilterOperationsByDescription(unittest.TestCase):
+    def test_basic_filtering(self):
+        # Проверка базовой фильтрации
+        operations = [
+            {'description': 'Grocery Store', 'amount': 50},
+            {'description': 'Gas Station', 'amount': 30},
+            {'description': 'Restaurant', 'amount': 40},
+        ]
+        search_string = 'grocery'
+        expected_result = [{'description': 'Grocery Store', 'amount': 50}]
+        self.assertEqual(filter_operations_by_description(operations, search_string), expected_result)
 
+    def test_case_insensitivity(self):
+        # Проверка игнорирования регистра
+        operations = [
+            {'description': 'Grocery Store', 'amount': 50},
+            {'description': 'grocery delivery', 'amount': 20},
+            {'description': 'Gas Station', 'amount': 30},
+        ]
+        search_string = 'GROCERY'
+        expected_result = [
+            {'description': 'Grocery Store', 'amount': 50},
+            {'description': 'grocery delivery', 'amount': 20},
+        ]
+        self.assertEqual(filter_operations_by_description(operations, search_string), expected_result)
 
-class TestCountOperationsByCategory(unittest.TestCase):
-    def test_empty_operations(self):
-        # Тест с пустым списком операций
+    def test_no_matches(self):
+        # Проверка случая, когда совпадений нет
+        operations = [
+            {'description': 'Grocery Store', 'amount': 50},
+            {'description': 'Gas Station', 'amount': 30},
+        ]
+        search_string = 'Restaurant'
+        expected_result = []
+        self.assertEqual(filter_operations_by_description(operations, search_string), expected_result)
+
+    def test_empty_operations_list(self):
+        # Проверка пустого списка операций
         operations = []
-        categories = ['магазин', 'интернет', 'перевод']
-        result = count_operations_by_category(operations, categories)
-        expected = {'магазин': 0, 'интернет': 0, 'перевод': 0}
-        self.assertEqual(result, expected)
+        search_string = 'Grocery'
+        expected_result = []
+        self.assertEqual(filter_operations_by_description(operations, search_string), expected_result)
 
-    def test_no_matching_categories(self):
-        # Тест, где в операциях нет совпадений с категориями
+    def test_empty_search_string(self):
+        # Проверка пустой строки поиска
         operations = [
-            {'description': 'Оплата за телефон'},
-            {'description': 'Покупка билетов'},
+            {'description': 'Grocery Store', 'amount': 50},
+            {'description': 'Gas Station', 'amount': 30},
         ]
-        categories = ['магазин', 'интернет', 'перевод']
-        result = count_operations_by_category(operations, categories)
-        expected = {'магазин': 0, 'интернет': 0, 'перевод': 0}
-        self.assertEqual(result, expected)
+        search_string = ''
+        expected_result = [
+            {'description': 'Grocery Store', 'amount': 50},
+            {'description': 'Gas Station', 'amount': 30},
+        ]
+        self.assertEqual(filter_operations_by_description(operations, search_string), expected_result)
 
-    def test_single_category_match(self):
-        # Тест, где есть совпадения только по одной категории
+    def test_special_characters_in_search_string(self):
+        # Проверка поиска с использованием специальных символов
         operations = [
-            {'description': 'Покупка в магазине'},
-            {'description': 'Оплата за интернет'},
-            {'description': 'Перевод другу'},
+            {'description': 'Grocery Store (Main)', 'amount': 50},
+            {'description': 'Gas Station', 'amount': 30},
         ]
-        categories = ['магазин', 'интернет', 'перевод']
-        result = count_operations_by_category(operations, categories)
-        expected = {'магазин': 1, 'интернет': 1, 'перевод': 1}
-        self.assertEqual(result, expected)
+        search_string = '(Main)'
+        expected_result = [{'description': 'Grocery Store (Main)', 'amount': 50}]
+        self.assertEqual(filter_operations_by_description(operations, search_string), expected_result)
 
-    def test_multiple_category_matches(self):
-        # Тест, где есть совпадения по нескольким категориям
+    def test_missing_description_field(self):
+        # Проверка случая, когда у некоторых операций отсутствует поле 'description'
         operations = [
-            {'description': 'Покупка в магазине'},
-            {'description': 'Оплата за интернет'},
-            {'description': 'Перевод другу'},
-            {'description': 'Покупка в магазине электроники'},
-            {'description': 'Оплата за интернет и телевидение'},
+            {'description': 'Grocery Store', 'amount': 50},
+            {'amount': 30},  # Нет поля 'description'
+            {'description': 'Gas Station', 'amount': 25},
         ]
-        categories = ['магазин', 'интернет', 'перевод']
-        result = count_operations_by_category(operations, categories)
-        expected = {'магазин': 2, 'интернет': 2, 'перевод': 1}
-        self.assertEqual(result, expected)
+        search_string = 'Grocery'
+        expected_result = [{'description': 'Grocery Store', 'amount': 50}]
+        self.assertEqual(filter_operations_by_description(operations, search_string), expected_result)
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

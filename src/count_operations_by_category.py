@@ -1,13 +1,30 @@
-def count_operations_by_category(operations, categories):
-    """
-    Подсчитывает количество операций по категориям.
-    """
-    category_count = {category: 0 for category in categories}  # Инициализация словаря с нулевыми значениями
+from collections import Counter
 
-    for operation in operations:
-        description = operation.get('description', '').lower()  # Приводим описание к нижнему регистру
-        for category in categories:
-            if category.lower() in description:  # Проверяем, содержится ли категория в описании
-                category_count[category] += 1
 
-    return category_count
+def count_transactions_by_type(transactions, category_dict):
+    # Создаем список категорий для каждой транзакции на основе описания
+    categories = [category_dict.get(transaction['description'], 'Unknown') for transaction in transactions]
+
+    # Используем Counter для подсчета количества операций по категориям
+    category_count = Counter(categories)
+
+    return dict(category_count)
+
+
+# Пример использования
+transactions = [
+    {'description': 'Grocery Store', 'amount': 50},
+    {'description': 'Gas Station', 'amount': 30},
+    {'description': 'Grocery Store', 'amount': 20},
+    {'description': 'Restaurant', 'amount': 40},
+    {'description': 'Gas Station', 'amount': 25},
+]
+
+category_dict = {
+    'Grocery Store': 'Food',
+    'Restaurant': 'Food',
+    'Gas Station': 'Transport',
+}
+
+result = count_transactions_by_type(transactions, category_dict)
+print(result)
